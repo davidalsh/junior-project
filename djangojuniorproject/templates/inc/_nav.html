@@ -1,0 +1,27 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+        <a class="navbar-brand" href="{% url 'forum' %}">Forum</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse d-flex justify-content-end" id="navbarNav">
+            <ul class="navbar-nav">
+                {% if not user.is_authenticated %}
+
+                    <li class="nav-item mx-1"><a class="btn btn-success" href="{% url 'log' %}" role="button">Log In</a></li>
+                    <li class="nav-item"><a class="btn btn-danger" href="{% url 'reg' %}" role="button">Sign Up</a></li>
+
+                {% else %}
+                    <li class="nav-item mx-1"><a class="btn btn-info" href="#" role="button">{{ user.username }}</a></li>
+                    <li class="nav-item">
+                        <a class="btn btn-danger" href="{% url 'logout' %}" role="button"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-door-closed" viewBox="0 0 16 16">
+                            <path d="M3 2a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v13h1.5a.5.5 0 0 1 0 1h-13a.5.5 0 0 1 0-1H3V2zm1 13h8V2H4v13z"/>
+                            <path d="M9 9a1 1 0 1 0 2 0 1 1 0 0 0-2 0z"/>
+                            </svg>
+                        </a>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</nav>
