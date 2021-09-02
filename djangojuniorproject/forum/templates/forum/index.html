@@ -2,24 +2,91 @@
 
 {% block content %}
 
-    <div class="card m-3">
-        <div class="card-header">
-            David A
+    <form method="post">
+        <div class="form-group mx-5 mt-5 mb-2">
+            <label for="exampleInputEmail1">Question</label>
+            {{ form.title }}
+            <small id="emailHelp" class="form-text text-muted">You can use up to 255 characters.</small>
         </div>
-        <div class="card-body">
-            <h5 class="card-title">Special title treatment</h5>
-            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-        </div>
-    </div>
-    <div class="card m-3">
-        <div class="card-header">
-            David A
-        </div>
-        <div class="card-body">
-            <h5 class="card-title">Special title treatment</h5>
-            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-        </div>
-    </div>
 
+        <div class="form-group mx-5 mb-2">
+            <label for="exampleFormControlTextarea1">Content</label>
+            {{ form.text }}
+            <textarea class="form-control" id="exampleFormControlTextarea1" rows="5"></textarea>
+        </div>
+        <ul class="nav justify-content-center">
+            <li class="nav-item">
+                <a class="nav-link btn btn-info" href="#">CREATE POST</a>
+            </li>
+        </ul>
+    </form>
+
+
+
+
+    {% for post in page_obj %}
+        <div class="card m-5">
+            <div class="card-header" style="background:#212529; color: #fff">
+                David Alshevski
+            </div>
+            <div class="card-body" style="background:#DBDBDB;">
+                <h5 class="card-title">{{ post.title }}</h5>
+                <p class="card-text">{{ post.text|truncatewords_html:50 }}</p>
+                <p class="card-text">{{ post.created_at|date:"SHORT_DATE_FORMAT" }}</p>
+            </div>
+        </div>
+    {% empty %}
+        <div class="card m-3">
+            <div class="card-header">
+                Ooooooops....
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">Nothing here</h5>
+                <p class="card-text">There is no posts yet</p>
+            </div>
+        </div>
+    {% endfor %}
+
+
+{% if page_obj.paginator.num_pages > 1%}
+<nav class="d-flex justify-content-center">
+    <ul class="pagination">
+        {% if page_obj.has_previous %}
+        <li class="page-item">
+            <a class="page-link" href="?page=1" aria-label="First">
+                <span aria-hidden="true">&laquo;</span>
+            </a>
+        </li>
+        <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">{{ page_obj.previous_page_number }}</a></li>
+        {% endif %}
+
+        <li class="page-item"><a class="page-link" href="#">{{ page_obj.number }}</a></li>
+
+        {% if page_obj.has_next %}
+        <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">{{ page_obj.next_page_number }}</a></li>
+        <li class="page-item">
+            <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+            </a>
+        </li>
+        {% endif %}
+    </ul>
+</nav>
+{% endif %}
 {% endblock %}
 
+
+
+{% block js %}
+
+var form_fields = document.getElementsByTagName('input')
+form_fields[1].placeholder='Email';
+form_fields[2].placeholder='Username';
+form_fields[3].placeholder='Password';
+form_fields[4].placeholder='Confirm Password';
+
+for (var field in form_fields){
+    form_fields[field].className += ' form-control'
+}
+
+{% endblock %}
