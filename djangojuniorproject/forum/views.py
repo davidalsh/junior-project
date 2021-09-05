@@ -36,6 +36,6 @@ class ForumMainPage(LoginRequiredMixin, View):
         if form.is_valid():
             obj = form.save()
             obj.save()
-            return redirect('')
+            return redirect('forum')
 
 

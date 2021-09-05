@@ -1,18 +1,19 @@
 {% extends 'base.html' %}
+{% load widget_tweaks %}
 
 {% block content %}
 
     <form method="post">
         <div class="form-group mx-5 mt-5 mb-2">
             <label for="exampleInputEmail1">Question</label>
-            {{ form.title }}
+            {{ form.title|add_class:"form-control" }}
             <small id="emailHelp" class="form-text text-muted">You can use up to 255 characters.</small>
         </div>
 
         <div class="form-group mx-5 mb-2">
             <label for="exampleFormControlTextarea1">Content</label>
-            {{ form.text }}
-            <textarea class="form-control" id="exampleFormControlTextarea1" rows="5"></textarea>
+            {{ form.text|add_class:"form-control" }}
+
         </div>
         <ul class="nav justify-content-center">
             <li class="nav-item">
@@ -30,7 +31,7 @@
                 David Alshevski
             </div>
             <div class="card-body" style="background:#DBDBDB;">
-                <h5 class="card-title">{{ post.title }}</h5>
+                <h5 class="card-title">{{ post.title|truncatewords_html:50 }}</h5>
                 <p class="card-text">{{ post.text|truncatewords_html:50 }}</p>
                 <p class="card-text">{{ post.created_at|date:"SHORT_DATE_FORMAT" }}</p>
             </div>
@@ -76,17 +77,3 @@
 {% endblock %}
 
 
-
-{% block js %}
-
-var form_fields = document.getElementsByTagName('input')
-form_fields[1].placeholder='Email';
-form_fields[2].placeholder='Username';
-form_fields[3].placeholder='Password';
-form_fields[4].placeholder='Confirm Password';
-
-for (var field in form_fields){
-    form_fields[field].className += ' form-control'
-}
-
-{% endblock %}
