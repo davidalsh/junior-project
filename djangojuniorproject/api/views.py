@@ -1,3 +1,25 @@
-from django.shortcuts import render
+from forum.models import Post
 
-# Create your views here.
+from api.serializers import PostsListSerializer, PostDetailSerializer
+
+from rest_framework import generics
+from rest_framework.permissions import IsAuthenticated, IsAdminUser
+from api.permissions import IsOwnerIsAdminOrReadOnly
+
+
+class PostsListView(generics.ListAPIView):
+    serializer_class = PostsListSerializer
+    queryset = Post.objects.all()
+    permission_classes = (IsAuthenticated,)
+
+
+class PostCreateDetailView(generics.CreateAPIView):
+    serializer_class = PostDetailSerializer
+    permission_classes = (IsAuthenticated,)
+
+
+class PostDetailView(generics.RetrieveUpdateDestroyAPIView):
+    serializer_class = PostDetailSerializer
+    queryset = Post.objects.all()
+    permission_classes = (IsOwnerIsAdminOrReadOnly,)
+
