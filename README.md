@@ -1,0 +1,2 @@
+# junior-project
+Django project
