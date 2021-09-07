@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+
+{% block title %}Edit post{% endblock %}
+
+{% block content %}
+<div class="card m-5">
+    <div class="card-header" style="background:#212529; color: #fff">
+        <span style="color: #FFC107;">{{ post.owner }}</span>
+        <a class="btn btn-danger" href="{% url 'delete-post' post_id=post.pk %}">Delete</a>
+    </div>
+    <div class="card-body" style="background:#DBDBDB;">
+        <h5 class="card-title">{{ post.title|truncatewords_html:50 }}</h5>
+        <p class="card-text">{{ post.text|truncatewords_html:50 }}</p>
+        <p class="card-text">{{ post.created_at|date:"SHORT_DATE_FORMAT" }}</p>
+    </div>
+</div>
+
+<form method="post">
+    {% csrf_token %}
+    <div class="form-group mx-5 mt-5 mb-2">
+        <label for="exampleInputEmail1">Question</label>
+        {{ form.title|add_class:"form-control" }}
+        <small id="emailHelp" class="form-text text-muted">You can use up to 255 characters.</small>
+    </div>
+
+    <div class="form-group mx-5 mb-2">
+        <label for="exampleFormControlTextarea1">Content</label>
+        {{ form.text|add_class:"form-control" }}
+
+    </div>
+    <ul class="nav justify-content-center">
+        <li class="nav-item">
+            <button class="nav-link btn btn-info" type="submit">UPDATE POST</button>
+        </li>
+    </ul>
+</form>
+
+{% endblock %}
+
+

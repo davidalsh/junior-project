@@ -3,7 +3,16 @@
 
 {% block content %}
 
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }} mt-3" role="alert">{{ message|escape }}</div>
+        {% endfor %}
+    {% endif %}
+
+
+
     <form method="post">
+        {% csrf_token %}
         <div class="form-group mx-5 mt-5 mb-2">
             <label for="exampleInputEmail1">Question</label>
             {{ form.title|add_class:"form-control" }}
@@ -17,7 +26,7 @@
         </div>
         <ul class="nav justify-content-center">
             <li class="nav-item">
-                <a class="nav-link btn btn-info" href="#">CREATE POST</a>
+                <button class="nav-link btn btn-info" type="submit">CREATE POST</button>
             </li>
         </ul>
     </form>
@@ -28,7 +37,12 @@
     {% for post in page_obj %}
         <div class="card m-5">
             <div class="card-header" style="background:#212529; color: #fff">
-                David Alshevski
+                <span style="color: #FFC107;">{{ post.owner }}</span>
+                {% if user == post.owner %}
+                    <div class="mt-1">
+                        <a class="btn btn-secondary" href="{% url 'edit-post' post.pk %}">Edit</a>
+                    </div>
+                {% endif %}
             </div>
             <div class="card-body" style="background:#DBDBDB;">
                 <h5 class="card-title">{{ post.title|truncatewords_html:50 }}</h5>
@@ -49,7 +63,7 @@
     {% endfor %}
 
 
-{% if page_obj.paginator.num_pages > 1%}
+{% if page_obj.paginator.num_pages > 1 %}
 <nav class="d-flex justify-content-center">
     <ul class="pagination">
         {% if page_obj.has_previous %}
