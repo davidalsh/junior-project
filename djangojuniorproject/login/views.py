@@ -92,7 +92,6 @@ class EditAboutProfileView(LoginRequiredMixin, View):
         return render(request, 'login/edit-profile.html', context={'profile': user_profile, 'form': form})
 
     def post(self, request):
-
         form = EditUserProfileForm(request.POST, request.FILES)
 
         if form.is_valid():
