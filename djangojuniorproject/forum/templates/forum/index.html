@@ -37,7 +37,7 @@
     {% for post in page_obj %}
         <div class="card m-5">
             <div class="card-header" style="background:#212529; color: #fff">
-                <span style="color: #FFC107;">{{ post.owner }}</span>
+                <a href="{% url 'user-profile' post.owner.username %}" style="color: #FFC107;">{{ post.owner }}</a>
                 {% if user == post.owner %}
                     <div class="mt-1">
                         <a class="btn btn-secondary" href="{% url 'edit-post' post.pk %}">Edit</a>
