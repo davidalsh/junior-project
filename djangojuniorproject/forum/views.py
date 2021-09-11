@@ -56,11 +56,11 @@ class EditPostPage(LoginRequiredMixin, View):
 
     def post(self, request, post_id):
         post = get_object_or_404(Post, pk=post_id)
-        if post.owner == request.user:
-            form = PostForm(request.POST)
-            obj = form.save(commit=False)
-            obj.owner = request.user
-            obj.save()
+        form = PostForm(request.POST)
+        if post.owner == request.user and form.is_valid():
+            post.title = request.POST['title']
+            post.text = request.POST['text']
+            post.save()
             messages.success(request, f'Question {post_id} was successfully edited.')
             return redirect('forum')
         return HttpResponseForbidden()

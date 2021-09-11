@@ -102,7 +102,7 @@ class EditAboutProfileView(LoginRequiredMixin, View):
             obj.user = request.user
             obj.save()
             return redirect('edit')
-        return render(request, 'log/edit-profile.html', context={'form': form})
+        return render(request, 'login/edit-profile.html', context={'form': form})
 
     @staticmethod
     def profile_object(user_id):
