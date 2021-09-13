@@ -2,20 +2,20 @@
 Junior Django project
 
 Stack:
-  Python
-  Django
-  django rest framework
-  simple JWT
+  Python,
+  Django,
+  Django Rest Framework,
+  Simple JWT,
   
-  PostgreSQL
+  PostgreSQL,
   
-  pipenv
-  docker, docker-compose
+  Pipenv,
+  Docker, docker-compose,
   
 Features:
-  CRUD posts
-  registration/login
-  files handling
-  Many2Many - subscribers
-  
+  CRUD posts,
+  Registration/login,
+  Editing profiles (Photo, Email, About information),
+  Files handling,
+  Many2Many - subscribers.  
 
